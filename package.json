@@ -1,0 +1,13 @@
+{
+  "name": "burger-house-template",
+  "version": "1.0.0",
+  "description": "Template bán hamburger với Tailwind CSS",
+  "scripts": {
+    "build:css": "tailwindcss -c ./tailwind/tailwind.config.js -i ./tailwind/input.css -o ./css/styles.css --minify",
+    "watch:css": "tailwindcss -c ./tailwind/tailwind.config.js -i ./tailwind/input.css -o ./css/styles.css --watch",
+    "build:css:standalone": "tailwind\\tailwindcss.exe -c ./tailwind/tailwind.config.js -i ./tailwind/input.css -o ./css/styles.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

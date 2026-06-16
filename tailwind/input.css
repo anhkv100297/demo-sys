@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body text-burger-dark bg-burger-cream antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-burger-red px-8 py-3 font-semibold text-white shadow-lg shadow-burger-red/30 transition-all duration-300 hover:-translate-y-1 hover:bg-red-600 hover:shadow-xl hover:shadow-burger-red/40;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-burger-dark px-8 py-3 font-semibold text-burger-dark transition-all duration-300 hover:-translate-y-1 hover:bg-burger-dark hover:text-white;
+  }
+
+  .section-title {
+    @apply font-display text-5xl tracking-wide text-burger-dark md:text-6xl;
+  }
+
+  .card-menu {
+    @apply relative overflow-hidden rounded-3xl bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl;
+  }
+}

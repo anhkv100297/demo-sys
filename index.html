@@ -1,11 +1,557 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Burger House — Hamburger thủ công cao cấp, nguyên liệu tươi mỗi ngày">
+  <title>Burger House | Hamburger Thủ Công Cao Cấp</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lilita+One&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            burgundy: { DEFAULT: '#541212', dark: '#3a0c0c', light: '#7a1a1a' },
+            cream: '#FFF8F0',
+            amber: { accent: '#F59E0B', warm: '#EA580C' },
+          },
+          fontFamily: {
+            display: ['"Lilita One"', 'cursive'],
+            heading: ['"Playfair Display"', 'serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            gourmet: '0 20px 60px -15px rgba(84, 18, 18, 0.25)',
+            card: '0 4px 24px rgba(84, 18, 18, 0.08)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Background đá cẩm thạch tối màu cho Header */
+    .marble-header {
+      background-image: linear-gradient(rgba(58, 12, 12, 0.85), rgba(58, 12, 12, 0.85)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=40');
+      background-size: cover;
+      background-position: center;
+    }
+    
+    /* Background ảnh Burger làm nền mờ cho toàn bộ phần Body phía dưới */
+    .burger-body-bg {
+      background-image: linear-gradient(to bottom, rgba(255, 248, 240, 0.82) 0%, rgba(255, 248, 240, 0.95) 100%), url('https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=1920&q=40');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #F59E0B;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .hero-image-wrap:hover .hero-image {
+      transform: scale(1.04);
+    }
+    .stat-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(84, 18, 18, 0.12);
+    }
+    .menu-card:hover .menu-img {
+      transform: scale(1.08);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-float { animation: float 4s ease-in-out infinite; }
+  </style>
 </head>
-<body>
-    <h1>Hello World</h1>
+
+<body class="font-body bg-cream text-gray-800 antialiased burger-body-bg">
+
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-white/10 marble-header shadow-lg">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-20 items-center justify-between">
+
+        <a href="#home" class="flex items-center gap-3 shrink-0">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full bg-cream text-burgundy shadow-md">
+            <i class="fa-solid fa-burger text-lg"></i>
+          </span>
+          <span class="font-display text-2xl tracking-wide text-white">
+            BURGER<span class="text-amber-accent">HOUSE</span>
+          </span>
+        </a>
+
+        <nav class="hidden lg:flex items-center justify-center gap-12 whitespace-nowrap px-4">
+          <a href="#home" class="nav-link font-medium text-white/90 hover:text-amber-accent transition-colors">Trang chủ</a>
+          <a href="#menu" class="nav-link font-medium text-white/90 hover:text-amber-accent transition-colors">Thực đơn</a>
+          <a href="#about" class="nav-link font-medium text-white/90 hover:text-amber-accent transition-colors">Về chúng tôi</a>
+          <a href="#contact" class="font-bold text-white bg-burgundy px-5 py-2 rounded-xl border border-white/10 shadow-inner">Liên hệ</a>
+        </nav>
+
+        <div class="flex items-center justify-end gap-3 shrink-0">
+          <a href="#menu" class="sm:inline-flex items-center gap-2 rounded-full border border-amber-accent bg-transparent px-6 py-2 text-sm font-semibold text-amber-accent hover:bg-amber-accent hover:text-burgundy transition-all">
+            <i class="fa-solid fa-bag-shopping"></i>
+            Đặt ngay
+          </a>
+          <button id="menu-toggle" class="lg:hidden flex h-11 w-11 items-center justify-center rounded-xl border border-white/20 text-white" aria-label="Mở menu">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="fixed inset-y-0 right-0 z-50 w-72 translate-x-full bg-burgundy p-8 shadow-2xl transition-transform duration-300 lg:hidden">
+    <button id="menu-close" class="mb-8 ml-auto flex text-white/80 hover:text-white" aria-label="Đóng menu">
+      <i class="fa-solid fa-xmark text-2xl"></i>
+    </button>
+    <nav class="flex flex-col gap-6">
+      <a href="#home" class="mobile-nav-link text-lg font-medium text-white/90 hover:text-amber-accent">Trang chủ</a>
+      <a href="#menu" class="mobile-nav-link text-lg font-medium text-white/90 hover:text-amber-accent">Thực đơn</a>
+      <a href="#about" class="mobile-nav-link text-lg font-medium text-white/90 hover:text-amber-accent">Về chúng tôi</a>
+      <a href="#contact" class="mobile-nav-link text-lg font-bold text-amber-accent">Liên hệ</a>
+    </nav>
+    <a href="#menu" class="mt-8 flex items-center justify-center gap-2 rounded-full bg-amber-accent px-6 py-3 font-semibold text-burgundy-dark">
+      <i class="fa-solid fa-bag-shopping"></i> Đặt ngay
+    </a>
+  </div>
+  <div id="menu-overlay" class="fixed inset-0 z-40 hidden bg-black/50 backdrop-blur-sm"></div>
+
+  <section id="home" class="relative overflow-hidden pt-36 pb-12 lg:pt-44 lg:pb-16">
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-12">
+
+        <div class="lg:col-span-6 order-2 lg:order-1 text-center lg:text-left">
+          <span class="inline-flex items-center gap-2 rounded-full border border-burgundy/15 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-burgundy shadow-sm backdrop-blur">
+            <i class="fa-solid fa-circle-check text-amber-accent"></i> Since 2015
+          </span>
+
+          <h1 class="mt-5 font-heading font-bold text-5xl leading-tight text-burgundy sm:text-6xl lg:text-7xl tracking-tight">
+            HAMBURGER <br class="hidden sm:inline" />
+            <span class="text-burgundy">NGON</span>
+          </h1>
+
+          <p class="mt-6 max-w-xl mx-auto lg:mx-0 text-base sm:text-lg leading-relaxed text-gray-700 font-medium">
+            Bánh mì nướng thơm giòn, thịt bò Angus tươi, rau organic — mỗi miếng cắn là một trải nghiệm đáng nhớ. <span class="text-burgundy hover:underline cursor-pointer block sm:inline mt-1 sm:mt-0 font-bold text-sm">Xem thực đơn Khám phá</span>
+          </p>
+
+          <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
+            <a href="#menu" class="inline-flex items-center gap-2 rounded-xl bg-burgundy px-8 py-3.5 font-bold text-white shadow-lg shadow-burgundy/30 transition-all hover:bg-burgundy-dark hover:-translate-y-0.5">
+              Khám phá ngay
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 order-1 lg:order-2 flex justify-center lg:justify-end">
+          <div class="hero-image-wrap relative w-full max-w-md p-4 bg-white/75 rounded-3xl border border-white/50 shadow-gourmet backdrop-blur-sm">
+            <div class="relative overflow-hidden rounded-2xl shadow-md bg-gray-100 aspect-[4/3]">
+            <img
+                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop"
+                alt="Hamburger cao cấp Burger House"
+                class="hero-image w-full h-full object-cover transition-transform duration-500 ease-out"
+            >
+            </div>
+            
+            <div class="absolute bottom-6 left-6 rounded-xl bg-white px-4 py-2 shadow-lg border border-gray-100">
+              <p class="flex items-center gap-1 text-[10px] font-extrabold uppercase text-amber-warm">
+                <i class="fa-solid fa-star"></i> Best Seller
+              </p>
+              <p class="font-display text-lg tracking-wide text-burgundy">Classic Burger</p>
+            </div>
+            
+            <div class="absolute -top-1 -right-1 rounded-2xl bg-burgundy px-5 py-2.5 text-white shadow-xl text-center border border-white/10">
+              <p class="font-display text-xl leading-none">89K</p>
+              <p class="text-[10px] uppercase font-bold tracking-wider text-white/60">VNĐ</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-6 sm:grid-cols-3">
+
+        <div class="stat-card rounded-2xl border border-white/40 bg-white/80 p-6 flex items-center justify-start gap-5 shadow-card backdrop-blur-sm">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-burgundy/5 text-burgundy border border-burgundy/10">
+            <i class="fa-solid fa-burger text-xl"></i>
+          </div>
+          <div class="text-left">
+            <p class="font-display text-3xl leading-tight text-burgundy" data-counter="50" data-suffix="+">0+</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Món burger</p>
+          </div>
+        </div>
+
+        <div class="stat-card rounded-2xl border border-white/40 bg-white/80 p-6 flex items-center justify-start gap-5 shadow-card backdrop-blur-sm">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-burgundy/5 text-burgundy border border-burgundy/10">
+            <i class="fa-solid fa-users text-xl"></i>
+          </div>
+          <div class="text-left">
+            <p class="font-display text-3xl leading-tight text-burgundy" data-counter="15" data-suffix="K+">0K+</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Khách hàng</p>
+          </div>
+        </div>
+
+        <div class="stat-card rounded-2xl border border-white/40 bg-white/80 p-6 flex items-center justify-start gap-5 shadow-card backdrop-blur-sm">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-burgundy/5 text-burgundy border border-burgundy/10">
+            <i class="fa-solid fa-thumbs-up text-xl"></i>
+          </div>
+          <div class="text-left">
+            <p class="font-display text-3xl leading-tight text-burgundy" data-rating="4.9">0.0</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Đánh giá</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 md:grid-cols-3">
+        <div class="rounded-2xl border border-burgundy/5 bg-cream p-8 text-center transition hover:shadow-card">
+          <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-burgundy/10 text-burgundy">
+            <i class="fa-solid fa-drumstick-bite text-3xl"></i>
+          </div>
+          <h3 class="font-display text-2xl text-burgundy">Thịt Tươi 100%</h3>
+          <p class="mt-2 text-gray-600">Bò Angus nhập khẩu, xay tươi mỗi ngày, không chất bảo quản.</p>
+        </div>
+        <div class="rounded-2xl border border-burgundy/5 bg-cream p-8 text-center transition hover:shadow-card">
+          <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-accent/15 text-amber-warm">
+            <i class="fa-solid fa-bread-slice text-3xl"></i>
+          </div>
+          <h3 class="font-display text-2xl text-burgundy">Bánh Nướng Thủ Công</h3>
+          <p class="mt-2 text-gray-600">Bánh brioche mềm xốp, nướng mỗi sáng theo công thức riêng.</p>
+        </div>
+        <div class="rounded-2xl border border-burgundy/5 bg-cream p-8 text-center transition hover:shadow-card">
+          <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-burgundy/10 text-burgundy">
+            <i class="fa-solid fa-motorcycle text-3xl"></i>
+          </div>
+          <h3 class="font-display text-2xl text-burgundy">Giao Hàng Nhanh</h3>
+          <p class="mt-2 text-gray-600">Đặt online, nhận burger nóng hổi trong 30 phút.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" class="py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-14 text-center">
+        <span class="text-sm font-semibold uppercase tracking-widest text-amber-warm">Thực đơn</span>
+        <h2 class="mt-2 font-display text-4xl text-burgundy sm:text-5xl">CHỌN BURGER YÊU THÍCH</h2>
+        <p class="mx-auto mt-4 max-w-lg text-gray-600">Mỗi burger được chế biến cẩn thận với nguyên liệu cao cấp nhất.</p>
+      </div>
+
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="menu-card group overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-burgundy/5 transition hover:-translate-y-1 hover:shadow-gourmet">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1568901345075-4c6650e4f209?w=600&q=80" alt="Classic Burger" class="menu-img h-full w-full object-cover transition-transform duration-500">
+            <span class="absolute right-4 top-4 rounded-full bg-burgundy px-4 py-1 text-sm font-bold text-white">89.000đ</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl text-burgundy">CLASSIC BURGER</h3>
+            <p class="mt-2 text-sm text-gray-500">Bò băm, phô mai cheddar, rau xà lách, cà chua, sốt đặc biệt</p>
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <button data-add-cart class="rounded-full bg-burgundy px-5 py-2 text-sm font-semibold text-white transition hover:bg-burgundy-dark">Thêm +</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card group overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-burgundy/5 transition hover:-translate-y-1 hover:shadow-gourmet">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=80" alt="Double Cheese" class="menu-img h-full w-full object-cover transition-transform duration-500">
+            <span class="absolute left-4 top-4 rounded-full bg-amber-accent px-3 py-1 text-xs font-bold text-burgundy-dark">HOT</span>
+            <span class="absolute right-4 top-4 rounded-full bg-burgundy px-4 py-1 text-sm font-bold text-white">119.000đ</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl text-burgundy">DOUBLE CHEESE</h3>
+            <p class="mt-2 text-sm text-gray-500">2 lớp bò, 2 lớp phô mai tan chảy, bacon giòn, sốt BBQ</p>
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <button data-add-cart class="rounded-full bg-burgundy px-5 py-2 text-sm font-semibold text-white transition hover:bg-burgundy-dark">Thêm +</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card group overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-burgundy/5 transition hover:-translate-y-1 hover:shadow-gourmet">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&q=80" alt="Spicy Chicken" class="menu-img h-full w-full object-cover transition-transform duration-500">
+            <span class="absolute right-4 top-4 rounded-full bg-burgundy px-4 py-1 text-sm font-bold text-white">79.000đ</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl text-burgundy">SPICY CHICKEN</h3>
+            <p class="mt-2 text-sm text-gray-500">Gà chiên giòn cay, coleslaw, dưa leo muối, sốt sriracha mayo</p>
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <button data-add-cart class="rounded-full bg-burgundy px-5 py-2 text-sm font-semibold text-white transition hover:bg-burgundy-dark">Thêm +</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card group overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-burgundy/5 transition hover:-translate-y-1 hover:shadow-gourmet">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1594212699903-7768f4381b0d?w=600&q=80" alt="Veggie Delight" class="menu-img h-full w-full object-cover transition-transform duration-500">
+            <span class="absolute right-4 top-4 rounded-full bg-burgundy px-4 py-1 text-sm font-bold text-white">69.000đ</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl text-burgundy">VEGGIE DELIGHT</h3>
+            <p class="mt-2 text-sm text-gray-500">Patty đậu nành, nấm portobello, bơ, rau rocket, sốt mè rang</p>
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <button data-add-cart class="rounded-full bg-burgundy px-5 py-2 text-sm font-semibold text-white transition hover:bg-burgundy-dark">Thêm +</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card group overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-burgundy/5 transition hover:-translate-y-1 hover:shadow-gourmet">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=600&q=80" alt="BBQ Bacon" class="menu-img h-full w-full object-cover transition-transform duration-500">
+            <span class="absolute right-4 top-4 rounded-full bg-burgundy px-4 py-1 text-sm font-bold text-white">129.000đ</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl text-burgundy">BBQ BACON</h3>
+            <p class="mt-2 text-sm text-gray-500">Bò wagyu, bacon dày, hành tây caramel, sốt BBQ hickory</p>
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <button data-add-cart class="rounded-full bg-burgundy px-5 py-2 text-sm font-semibold text-white transition hover:bg-burgundy-dark">Thêm +</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card group overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-burgundy/5 transition hover:-translate-y-1 hover:shadow-gourmet">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&q=80" alt="Fish Burger" class="menu-img h-full w-full object-cover transition-transform duration-500">
+            <span class="absolute right-4 top-4 rounded-full bg-burgundy px-4 py-1 text-sm font-bold text-white">85.000đ</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl text-burgundy">FISH BURGER</h3>
+            <p class="mt-2 text-sm text-gray-500">Cá tuyết chiên giòn, sốt tartar, rau diếp, chanh tươi</p>
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <button data-add-cart class="rounded-full bg-burgundy px-5 py-2 text-sm font-semibold text-white transition hover:bg-burgundy-dark">Thêm +</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="bg-burgundy py-24 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <div class="relative">
+          <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457edd?w=600&q=80" alt="Đầu bếp nấu burger" class="rounded-2xl shadow-gourmet">
+          <div class="absolute -bottom-5 -right-5 rounded-2xl bg-amber-accent px-6 py-4 text-burgundy-dark shadow-lg">
+            <p class="font-display text-4xl">10+</p>
+            <p class="text-sm font-medium">Năm kinh nghiệm</p>
+          </div>
+        </div>
+        <div>
+          <span class="text-sm font-semibold uppercase tracking-widest text-amber-accent">Về chúng tôi</span>
+          <h2 class="mt-2 font-display text-4xl sm:text-5xl">CÂU CHUYỆN BURGER HOUSE</h2>
+          <p class="mt-6 leading-relaxed text-white/75">
+            Burger House bắt đầu từ một quán nhỏ với ước mơ mang đến hamburger chất lượng nhất.
+            Hôm nay, chúng tôi tự hào phục vụ hàng nghìn khách hàng mỗi ngày với công thức gia truyền
+            và tình yêu dành cho ẩm thực.
+          </p>
+          <ul class="mt-8 space-y-4">
+            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-accent"></i> Nguyên liệu organic, nguồn gốc rõ ràng</li>
+            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-accent"></i> Đầu bếp được đào tạo chuyên nghiệp</li>
+            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-accent"></i> Cam kết chất lượng 100% hoặc hoàn tiền</li>
+          </ul>
+          <a href="#contact" class="mt-8 inline-flex items-center gap-2 rounded-full bg-amber-accent px-8 py-3 font-semibold text-burgundy-dark transition hover:bg-amber-400">
+            Liên hệ ngay <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream/40 py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-14 text-center">
+        <span class="text-sm font-semibold uppercase tracking-widest text-amber-warm">Đánh giá</span>
+        <h2 class="mt-2 font-display text-4xl text-burgundy sm:text-5xl">KHÁCH HÀNG NÓI GÌ?</h2>
+      </div>
+      <div class="grid gap-8 md:grid-cols-3">
+        <blockquote class="rounded-2xl border border-burgundy/5 bg-white p-8 shadow-card">
+          <div class="mb-4 text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="italic text-gray-600">"Burger ngon nhất tôi từng ăn! Bánh mềm, thịt mọng nước, sốt đậm đà. Chắc chắn sẽ quay lại!"</p>
+          <footer class="mt-6 flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-burgundy text-sm font-bold text-white">MH</div>
+            <div><p class="font-semibold">Minh Hoàng</p><p class="text-sm text-gray-400">Khách quen</p></div>
+          </footer>
+        </blockquote>
+        <blockquote class="rounded-2xl border border-burgundy/5 bg-white p-8 shadow-card">
+          <div class="mb-4 text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="italic text-gray-600">"Double Cheese là món yêu thích của cả gia đình. Giao hàng nhanh, burger vẫn còn nóng!"</p>
+          <footer class="mt-6 flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-amber-accent text-sm font-bold text-burgundy-dark">TL</div>
+            <div><p class="font-semibold">Thảo Linh</p><p class="text-sm text-gray-400">Food Blogger</p></div>
+          </footer>
+        </blockquote>
+        <blockquote class="rounded-2xl border border-burgundy/5 bg-white p-8 shadow-card">
+          <div class="mb-4 text-amber-accent"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="italic text-gray-600">"Không gian đẹp, nhân viên thân thiện. Veggie Delight ngon không kém burger thịt!"</p>
+          <footer class="mt-6 flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-burgundy-light text-sm font-bold text-white">AN</div>
+            <div><p class="font-semibold">An Nguyễn</p><p class="text-sm text-gray-400">Sinh viên</p></div>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="overflow-hidden rounded-3xl bg-gradient-to-br from-burgundy to-burgundy-dark shadow-gourmet">
+        <div class="grid lg:grid-cols-2">
+          <div class="p-10 text-white lg:p-16">
+            <h2 class="font-display text-5xl lg:text-6xl">ĐÓI CHƯA?</h2>
+            <p class="mt-4 text-white/75">Đặt burger ngay — giao tận nơi trong 30 phút!</p>
+            <div class="mt-8 space-y-4">
+              <p class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-amber-accent"></i> 123 Nguyễn Huệ, Quận 1, TP.HCM</p>
+              <p class="flex items-center gap-3"><i class="fa-solid fa-phone text-amber-accent"></i> 1900 1234</p>
+              <p class="flex items-center gap-3"><i class="fa-solid fa-clock text-amber-accent"></i> 10:00 - 22:00 hàng ngày</p>
+            </div>
+          </div>
+          <button style="display:none" id="trigger-toast-fix"></button>
+          <form class="bg-white/10 p-10 backdrop-blur lg:p-16" onsubmit="event.preventDefault(); showToast('Cảm ơn bạn! Chúng tôi sẽ liên hệ sớm.');">
+            <div class="space-y-4">
+              <input type="text" placeholder="Họ và tên" required class="w-full rounded-xl border-0 bg-white/95 px-5 py-3 text-gray-800 outline-none focus:ring-2 focus:ring-amber-accent">
+              <input type="tel" placeholder="Số điện thoại" required class="w-full rounded-xl border-0 bg-white/95 px-5 py-3 text-gray-800 outline-none focus:ring-2 focus:ring-amber-accent">
+              <textarea placeholder="Ghi chú đơn hàng..." rows="3" class="w-full rounded-xl border-0 bg-white/95 px-5 py-3 text-gray-800 outline-none focus:ring-2 focus:ring-amber-accent"></textarea>
+              <button type="submit" class="w-full rounded-full bg-amber-accent py-3.5 font-semibold text-burgundy-dark transition hover:bg-amber-400">
+                <i class="fa-solid fa-paper-plane mr-2"></i> Gửi đơn hàng
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-burgundy/10 bg-burgundy-dark py-12 text-white/60">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-burger text-amber-accent text-2xl"></i>
+          <span class="font-display text-xl text-white">BURGER<span class="text-amber-accent">HOUSE</span></span>
+        </div>
+        <p class="text-sm">&copy; 2026 Burger House. All rights reserved.</p>
+        <div class="flex gap-4">
+          <a href="#" class="transition hover:text-amber-accent" aria-label="Facebook"><i class="fa-brands fa-facebook-f text-lg"></i></a>
+          <a href="#" class="transition hover:text-amber-accent" aria-label="Instagram"><i class="fa-brands fa-instagram text-lg"></i></a>
+          <a href="#" class="transition hover:text-amber-accent" aria-label="TikTok"><i class="fa-brands fa-tiktok text-lg"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="fixed bottom-6 right-6 z-50 translate-y-24 opacity-0 transition-all duration-500 pointer-events-none">
+    <div class="flex items-center gap-3 rounded-2xl bg-burgundy px-6 py-4 text-white shadow-gourmet">
+      <i class="fa-solid fa-circle-check text-amber-accent"></i>
+      <span id="toast-msg"></span>
+    </div>
+  </div>
+
+  <script>
+    // Toast notification logic
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = message;
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // Mobile menu logic
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose = document.getElementById('menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function openMenu() {
+      mobileMenu.classList.remove('translate-x-full');
+      menuOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      mobileMenu.classList.add('translate-x-full');
+      menuOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    menuToggle.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+    mobileLinks.forEach(l => l.addEventListener('click', closeMenu));
+
+    // Counter / Stats counting animation with IntersectionObserver
+    function animateCounters() {
+      document.querySelectorAll('[data-counter], [data-rating]').forEach(el => {
+        const isRating = el.hasAttribute('data-rating');
+        const target = isRating ? parseFloat(el.dataset.rating) : parseInt(el.dataset.counter, 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1500;
+
+        const observer = new IntersectionObserver(([entry]) => {
+          if (!entry.isIntersecting) return;
+          observer.disconnect();
+
+          let startTimestamp = null;
+          function step(timestamp) {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const easedProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+            
+            if (isRating) {
+              el.textContent = (easedProgress * target).toFixed(1);
+            } else {
+              el.textContent = Math.floor(easedProgress * target) + suffix;
+            }
+            
+            if (progress < 1) {
+              window.requestAnimationFrame(step);
+            }
+          }
+          window.requestAnimationFrame(step);
+        }, { threshold: 0.2 });
+
+        observer.observe(el);
+      });
+    }
+    
+    document.addEventListener('DOMContentLoaded', animateCounters);
+  </script>
 </body>
 </html>
